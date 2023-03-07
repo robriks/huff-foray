@@ -1,0 +1,28 @@
+#define function addTwo(uint256, uint256) view returns(uint256)
+
+#define macro MAIN() = takes(0) returns(0) {
+
+    // retrieve function selector from calldata
+    0x00
+    calldataload
+    0xE0 // push 32 bytes - 4 bytes ( 0xFF - 0x20 ) to the stack as parameter for next opcode: SHR
+    SHR
+    
+
+    // if calldata matches function signature, denoted with native Huff __FUNC_SIG(), jump to ADD_TWO function
+    __FUNC_SIG(addTwo) eq addTwo jumpi
+
+    // the following handles in-line inclusion of the specified function's logic to bring it within contract scope
+    addTwo:
+        ADD_TWO()
+}
+
+#define macro ADD_TWO() = takes(0) returns(0) {
+
+    0x00 calldataload // load first 32 bytes from calldata's 0x00 location onto the stack
+    0x20 calldataload // load second 32 bytes from calldata's 0x20 location onto the stack
+    add               // adds number 1 and 2, putting the result onto top of stack
+
+    0x00 mstore       // place result of add opcode into memory
+    0x20 0x00 return  // return 32 bytes of memory at position 0x00
+}

@@ -1,0 +1,21 @@
+#define macro MAIN() = takes(0) returns (0) {
+    // store offset of 0x20 at 0x00
+    0x20 // value first
+    0x00 // then push memory location on top of stack
+    mstore
+
+    // store string length of 0x0d at 0x20
+    0x0d // value first
+    0x20 // push mem loc to top of stack
+    mstore
+
+    // store bytes of 'Hello, world!' at 0x40
+    __RIGHTPAD(0x48656c6c6f2c20776f726c6421) // bytes must be right padded
+    0x40 // mem location
+    mstore
+
+    // return full 96 byte value ( all three earlier steps )
+    0x60 // length to return
+    0x00 // location to return from to top of stack
+    return
+}
