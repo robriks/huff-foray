@@ -1,7 +1,11 @@
+// Interface
 #define function setValue(uint256) nonpayable returns()
 #define function getValue() nonpayable returns(uint256)
 
+// Storage
 #define constant VALUE = FREE_STORAGE_POINTER()
+
+// External functions
 
 #define macro SET_VALUE() = takes(0) returns(0) {
     0x04 // push byte 4 to stack to skip over function selector
